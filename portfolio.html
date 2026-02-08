@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KIM DONGHYUN | Backend Engineer</title>
+    <title>김동현 | Web Developer</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
     <style>
         * {
             margin: 0;
@@ -16,6 +22,7 @@
             --secondary: #1a1f3a;
             --accent: #00d9ff;
             --accent-warm: #ff6b6b;
+            --accent-purple: #a78bfa;
             --text-primary: #f5f5f5;
             --text-secondary: #a0a0a0;
             --border: #2a3f5f;
@@ -27,15 +34,15 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1729 100%);
+            font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0e27;
             color: var(--text-primary);
             line-height: 1.6;
             position: relative;
             overflow-x: hidden;
         }
 
-        /* 배경 애니메이션 */
+        /* 향상된 배경 애니메이션 */
         body::before {
             content: '';
             position: fixed;
@@ -43,10 +50,18 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.05) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(255, 107, 107, 0.03) 0%, transparent 50%);
+            background:
+                radial-gradient(circle at 10% 20%, rgba(0, 217, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(167, 139, 250, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(255, 107, 107, 0.04) 0%, transparent 50%);
             pointer-events: none;
             z-index: -1;
+            animation: backgroundShift 20s ease infinite;
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
 
         /* 유틸리티 */
@@ -60,9 +75,9 @@
         header {
             position: sticky;
             top: 0;
-            background: rgba(10, 14, 39, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
+            background: rgba(10, 14, 39, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid rgba(0, 217, 255, 0.1);
             z-index: 100;
             animation: slideDown 0.6s ease-out;
         }
@@ -87,9 +102,9 @@
 
         .logo {
             font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            background: linear-gradient(90deg, var(--accent) 0%, #00a8cc 100%);
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-purple) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -105,6 +120,7 @@
             color: var(--text-secondary);
             text-decoration: none;
             font-size: 0.95rem;
+            font-weight: 600;
             transition: all 0.3s ease;
             position: relative;
             padding-bottom: 0.25rem;
@@ -117,7 +133,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--accent);
+            background: linear-gradient(90deg, var(--accent), var(--accent-purple));
             transition: width 0.3s ease;
         }
 
@@ -137,20 +153,30 @@
 
         /* ===== 히어로 섹션 ===== */
         .hero {
-            padding: 6rem 0 4rem;
+            padding: 8rem 0 6rem;
             min-height: 100vh;
             display: flex;
             align-items: center;
-            animation: fadeIn 0.8s ease-out 0.2s both;
+            position: relative;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.5; }
+            50% { transform: translateX(-50%) scale(1.1); opacity: 0.8; }
         }
 
         .hero-content {
@@ -158,15 +184,21 @@
             grid-template-columns: 1fr 1fr;
             gap: 4rem;
             align-items: center;
+            position: relative;
+            z-index: 1;
         }
 
         .hero-text h1 {
-            font-size: 3.5rem;
+            font-size: 4rem;
             font-weight: 800;
             margin-bottom: 1rem;
-            line-height: 1.2;
-            letter-spacing: -1px;
+            line-height: 1.1;
+            letter-spacing: -2px;
             animation: slideUp 0.7s ease-out 0.3s both;
+            background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         @keyframes slideUp {
@@ -182,18 +214,21 @@
 
         .hero-text .title {
             color: var(--accent);
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
             animation: slideUp 0.7s ease-out 0.4s both;
         }
 
         .hero-text .subtitle {
             color: var(--text-secondary);
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
+            font-size: 1.15rem;
+            margin-bottom: 2.5rem;
             animation: slideUp 0.7s ease-out 0.5s both;
             max-width: 500px;
+            line-height: 1.8;
         }
 
         .hero-cta {
@@ -205,36 +240,57 @@
         .btn {
             padding: 1rem 2rem;
             border: none;
-            border-radius: 0.5rem;
+            border-radius: 0.75rem;
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-decoration: none;
             display: inline-block;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
         .btn-primary {
-            background: linear-gradient(90deg, var(--accent) 0%, #00a8cc 100%);
-            color: var(--primary);
-            border: 2px solid var(--accent);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-purple) 100%);
+            color: #fff;
             box-shadow: 0 10px 30px rgba(0, 217, 255, 0.3);
         }
 
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 217, 255, 0.4);
+        }
+
         .btn-secondary {
-            background: transparent;
+            background: rgba(0, 217, 255, 0.1);
             color: var(--accent);
             border: 2px solid var(--accent);
+            backdrop-filter: blur(10px);
         }
 
         .btn-secondary:hover {
-            background: rgba(0, 217, 255, 0.1);
-            transform: translateY(-2px);
+            background: rgba(0, 217, 255, 0.2);
+            transform: translateY(-3px);
         }
 
         .hero-visual {
@@ -246,24 +302,30 @@
 
         .avatar-container {
             position: relative;
-            width: 300px;
-            height: 300px;
+            width: 320px;
+            height: 320px;
         }
 
         .avatar {
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-warm) 100%);
-            border-radius: 20px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-purple) 100%);
+            border-radius: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 6rem;
-            font-weight: 700;
-            color: var(--primary);
-            box-shadow: 0 20px 60px rgba(0, 217, 255, 0.2);
+            font-size: 5rem;
+            font-weight: 800;
+            color: #fff;
+            box-shadow: 0 30px 80px rgba(0, 217, 255, 0.3);
             position: relative;
             overflow: hidden;
+            transform: rotate(-3deg);
+            transition: transform 0.3s ease;
+        }
+
+        .avatar:hover {
+            transform: rotate(0deg) scale(1.05);
         }
 
         .avatar::before {
@@ -273,8 +335,8 @@
             right: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            animation: shimmer 3s infinite;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+            animation: shimmer 4s linear infinite;
         }
 
         @keyframes shimmer {
@@ -284,15 +346,15 @@
 
         .avatar-glow {
             position: absolute;
-            inset: -5px;
-            border-radius: 20px;
-            background: linear-gradient(90deg, var(--accent), var(--accent-warm), var(--accent));
-            opacity: 0.3;
-            filter: blur(15px);
-            animation: pulse 2s ease-in-out infinite;
+            inset: -10px;
+            border-radius: 30px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-purple));
+            opacity: 0.4;
+            filter: blur(30px);
+            animation: glowPulse 3s ease-in-out infinite;
         }
 
-        @keyframes pulse {
+        @keyframes glowPulse {
             0%, 100% { opacity: 0.3; }
             50% { opacity: 0.6; }
         }
@@ -300,25 +362,33 @@
         @media (max-width: 1024px) {
             .hero-content {
                 grid-template-columns: 1fr;
+                text-align: center;
             }
+
             .hero-text h1 {
-                font-size: 2.5rem;
+                font-size: 3rem;
+            }
+
+            .hero-text .subtitle {
+                margin: 0 auto 2rem;
+            }
+
+            .hero-cta {
+                justify-content: center;
             }
         }
 
         /* ===== 스킬 섹션 ===== */
         .skills {
             padding: 6rem 0;
-            background: linear-gradient(180deg, rgba(26, 31, 58, 0.5) 0%, rgba(10, 14, 39, 0.3) 100%);
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
+            position: relative;
         }
 
         .section-title {
             font-size: 2.5rem;
             font-weight: 800;
             margin-bottom: 0.5rem;
-            letter-spacing: -0.5px;
+            letter-spacing: -1px;
         }
 
         .section-subtitle {
@@ -329,19 +399,20 @@
 
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
         }
 
         .skill-category {
-            background: rgba(26, 31, 58, 0.6);
-            border: 1px solid var(--border);
+            background: rgba(26, 31, 58, 0.4);
+            border: 1px solid rgba(0, 217, 255, 0.15);
             padding: 2rem;
-            border-radius: 1rem;
-            transition: all 0.3s ease;
+            border-radius: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(10px);
         }
 
         .skill-category::before {
@@ -351,14 +422,15 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.1), transparent);
-            transition: left 0.5s ease;
+            background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.15), transparent);
+            transition: left 0.6s ease;
         }
 
         .skill-category:hover {
             border-color: var(--accent);
-            transform: translateY(-5px);
-            background: rgba(26, 31, 58, 0.9);
+            transform: translateY(-8px);
+            background: rgba(26, 31, 58, 0.6);
+            box-shadow: 0 20px 50px rgba(0, 217, 255, 0.2);
         }
 
         .skill-category:hover::before {
@@ -368,8 +440,11 @@
         .skill-category h3 {
             color: var(--accent);
             font-size: 1.3rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
             font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .skill-tags {
@@ -385,17 +460,20 @@
             border-radius: 50px;
             font-size: 0.9rem;
             border: 1px solid rgba(0, 217, 255, 0.3);
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            font-weight: 600;
         }
 
         .skill-tag:hover {
             background: rgba(0, 217, 255, 0.2);
             border-color: var(--accent);
+            transform: scale(1.05);
         }
 
         /* ===== 경력 섹션 ===== */
         .experience {
             padding: 6rem 0;
+            background: rgba(26, 31, 58, 0.2);
         }
 
         .timeline {
@@ -410,7 +488,7 @@
             top: 0;
             bottom: 0;
             width: 3px;
-            background: linear-gradient(180deg, var(--accent) 0%, transparent 100%);
+            background: linear-gradient(180deg, var(--accent) 0%, var(--accent-purple) 50%, transparent 100%);
         }
 
         .timeline-item {
@@ -427,69 +505,118 @@
         .timeline-item::before {
             content: '';
             position: absolute;
-            left: -8px;
+            left: -9px;
             top: 0;
-            width: 15px;
-            height: 15px;
+            width: 17px;
+            height: 17px;
             background: var(--accent);
             border-radius: 50%;
-            border: 3px solid var(--primary);
+            border: 4px solid var(--primary);
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
         }
 
         .timeline-item .date {
             color: var(--accent);
             font-size: 0.9rem;
-            font-weight: 600;
+            font-weight: 700;
             margin-bottom: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
         }
 
         .timeline-item h3 {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             margin-bottom: 0.3rem;
+            font-weight: 800;
         }
 
         .timeline-item .position {
             color: var(--text-secondary);
             margin-bottom: 0.8rem;
+            font-weight: 600;
         }
 
         .timeline-item p {
             color: var(--text-secondary);
-            line-height: 1.7;
+            line-height: 1.8;
+        }
+
+        /* ===== 교육 섹션 ===== */
+        .education {
+            padding: 6rem 0;
+        }
+
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .education-card {
+            background: rgba(26, 31, 58, 0.4);
+            border: 1px solid rgba(0, 217, 255, 0.15);
+            padding: 2rem;
+            border-radius: 1.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .education-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 217, 255, 0.15);
+        }
+
+        .education-card h3 {
+            color: var(--accent);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .education-card .degree {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .education-card .period {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-family: 'JetBrains Mono', monospace;
         }
 
         /* ===== 프로젝트 섹션 ===== */
         .projects {
             padding: 6rem 0;
-            background: linear-gradient(180deg, rgba(26, 31, 58, 0.3) 0%, rgba(10, 14, 39, 0.5) 100%);
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
+            background: rgba(26, 31, 58, 0.2);
         }
 
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
         }
 
         .project-card {
-            background: rgba(26, 31, 58, 0.6);
-            border: 1px solid var(--border);
-            border-radius: 1rem;
+            background: rgba(26, 31, 58, 0.4);
+            border: 1px solid rgba(0, 217, 255, 0.15);
+            border-radius: 1.5rem;
             padding: 2.5rem;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            backdrop-filter: blur(10px);
         }
 
         .project-card::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1) 0%, transparent 100%);
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1) 0%, rgba(167, 139, 250, 0.1) 100%);
             opacity: 0;
             transition: opacity 0.3s ease;
             pointer-events: none;
@@ -497,9 +624,8 @@
 
         .project-card:hover {
             border-color: var(--accent);
-            transform: translateY(-8px);
-            background: rgba(26, 31, 58, 0.95);
-            box-shadow: 0 15px 40px rgba(0, 217, 255, 0.15);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 217, 255, 0.2);
         }
 
         .project-card:hover::after {
@@ -507,14 +633,15 @@
         }
 
         .project-icon {
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 1rem;
+            filter: drop-shadow(0 0 20px rgba(0, 217, 255, 0.3));
         }
 
         .project-card h3 {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             margin-bottom: 0.5rem;
-            font-weight: 700;
+            font-weight: 800;
         }
 
         .project-card .role {
@@ -528,6 +655,7 @@
             color: var(--text-secondary);
             margin-bottom: 1.5rem;
             flex-grow: 1;
+            line-height: 1.7;
         }
 
         .project-tech {
@@ -539,10 +667,11 @@
         .project-tech span {
             background: rgba(0, 217, 255, 0.1);
             color: var(--accent);
-            padding: 0.3rem 0.7rem;
+            padding: 0.4rem 0.8rem;
             border-radius: 30px;
             font-size: 0.8rem;
             border: 1px solid rgba(0, 217, 255, 0.2);
+            font-weight: 600;
         }
 
         /* ===== 문제해결 섹션 ===== */
@@ -552,21 +681,23 @@
 
         .problem-item {
             background: rgba(26, 31, 58, 0.4);
-            border: 1px solid var(--border);
-            border-radius: 1rem;
+            border: 1px solid rgba(0, 217, 255, 0.15);
+            border-radius: 1.5rem;
             padding: 2.5rem;
             margin-bottom: 2rem;
             transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
 
         .problem-item:hover {
             border-color: var(--accent);
             background: rgba(26, 31, 58, 0.6);
+            transform: translateX(10px);
         }
 
         .problem-title {
             color: var(--accent);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 700;
             margin-bottom: 1rem;
             display: flex;
@@ -576,7 +707,7 @@
 
         .problem-item p {
             color: var(--text-secondary);
-            line-height: 1.8;
+            line-height: 1.9;
             margin-bottom: 1rem;
         }
 
@@ -584,12 +715,76 @@
             margin-bottom: 0;
         }
 
+        .problem-item strong {
+            color: var(--accent);
+        }
+
+        /* ===== 알바트로스 섹션 ===== */
+        .philosophy {
+            padding: 6rem 0;
+            background: rgba(26, 31, 58, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .philosophy::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(167, 139, 250, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(80px);
+        }
+
+        .philosophy-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .philosophy-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: block;
+            filter: drop-shadow(0 0 30px rgba(167, 139, 250, 0.5));
+        }
+
+        .philosophy-text {
+            font-size: 1.1rem;
+            line-height: 2;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .philosophy-text strong {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .philosophy-highlight {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1) 0%, rgba(167, 139, 250, 0.1) 100%);
+            border-left: 4px solid var(--accent);
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-top: 2rem;
+            font-style: italic;
+            color: var(--text-primary);
+            font-size: 1.15rem;
+            backdrop-filter: blur(10px);
+        }
+
         /* ===== 푸터 ===== */
         footer {
-            background: rgba(10, 14, 39, 0.8);
-            border-top: 1px solid var(--border);
+            background: rgba(10, 14, 39, 0.9);
+            border-top: 1px solid rgba(0, 217, 255, 0.15);
             padding: 3rem 0 2rem;
             text-align: center;
+            backdrop-filter: blur(20px);
         }
 
         .footer-content {
@@ -612,11 +807,16 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid transparent;
         }
 
         .social-links a:hover {
             color: var(--accent);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            border-color: rgba(0, 217, 255, 0.3);
+            background: rgba(0, 217, 255, 0.05);
         }
 
         .footer-text {
@@ -632,7 +832,7 @@
             }
 
             .hero-text h1 {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
 
             .section-title {
@@ -645,71 +845,39 @@
             }
 
             .timeline::before {
-                left: -8px;
+                left: 0;
             }
 
             .timeline-item {
-                padding-left: 2rem;
+                padding-left: 2.5rem;
             }
 
             .timeline-item::before {
-                left: -14px;
+                left: -9px;
             }
         }
 
         /* 스크롤 여부에 따른 헤더 */
         header.scrolled {
-            box-shadow: 0 4px 20px rgba(0, 217, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 217, 255, 0.1);
         }
 
-        /* ===== 알바트로스 섹션 ===== */
-        .philosophy {
-            padding: 6rem 0;
-            background: linear-gradient(135deg, rgba(26, 31, 58, 0.5) 0%, rgba(10, 14, 39, 0.3) 100%);
-            border-top: 1px solid var(--border);
+        /* 스크롤바 스타일링 */
+        ::-webkit-scrollbar {
+            width: 10px;
         }
 
-        .philosophy-content {
-            max-width: 800px;
-            margin: 0 auto;
+        ::-webkit-scrollbar-track {
+            background: var(--primary);
         }
 
-        .philosophy-icon {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            display: block;
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--accent), var(--accent-purple));
+            border-radius: 5px;
         }
 
-        .philosophy-text {
-            font-size: 1.05rem;
-            line-height: 1.9;
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-        }
-
-        .philosophy-text strong {
-            color: var(--accent);
-            font-weight: 700;
-        }
-
-        .philosophy-highlight {
-            background: rgba(0, 217, 255, 0.05);
-            border-left: 4px solid var(--accent);
-            padding: 2rem;
-            border-radius: 0.5rem;
-            margin-top: 2rem;
-            font-style: italic;
-            color: var(--text-primary);
-        }
-
-        @media (max-width: 768px) {
-            .philosophy {
-                padding: 4rem 0;
-            }
-
-            .philosophy-text {
-                font-size: 1rem;
-            }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
         }
     </style>
 </head>
@@ -718,11 +886,12 @@
     <header>
         <div class="container">
             <nav>
-                <div class="logo">KIM DONGHYUN</div>
+                <div class="logo">KDH</div>
                 <ul class="nav-links">
                     <li><a href="#about">소개</a></li>
                     <li><a href="#skills">기술</a></li>
                     <li><a href="#experience">경력</a></li>
+                    <li><a href="#education">교육</a></li>
                     <li><a href="#projects">프로젝트</a></li>
                     <li><a href="#contact">연락</a></li>
                 </ul>
@@ -737,16 +906,18 @@
                 <div class="hero-text">
                     <div class="title">Web Developer</div>
                     <h1>김동현</h1>
-                    <p class="subtitle">8년간 웹어플리케이션 개발 프로젝트에 참가한 시니어 웹개발자입니다.</p>
+                    <p class="subtitle">8년간 웹어플리케이션 개발에 참여해온 시니어 웹개발자입니다. 성능 최적화, 시스템 아키텍처 설계에 전문성을 갖고 있습니다.</p>
                     <div class="hero-cta">
                         <a href="#projects" class="btn btn-primary">프로젝트 보기</a>
                         <a href="#contact" class="btn btn-secondary">연락하기</a>
                     </div>
                 </div>
-                <!--<div class="hero-visual">
-                    <div class="avatar-glow"></div>
-                    <div class="avatar">김동현</div>
-                </div>-->
+                <div class="hero-visual">
+                    <div class="avatar-container">
+                        <div class="avatar-glow"></div>
+                        <div class="avatar">KDH</div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -759,7 +930,7 @@
 
             <div class="skills-grid">
                 <div class="skill-category">
-                    <h3>백엔드</h3>
+                    <h3>💻 백엔드</h3>
                     <div class="skill-tags">
                         <span class="skill-tag">Java 17</span>
                         <span class="skill-tag">Spring Boot 3.x</span>
@@ -769,16 +940,17 @@
                 </div>
 
                 <div class="skill-category">
-                    <h3>데이터베이스</h3>
+                    <h3>🗄️ 데이터베이스</h3>
                     <div class="skill-tags">
                         <span class="skill-tag">MySQL</span>
                         <span class="skill-tag">Redis</span>
                         <span class="skill-tag">AWS ElastiCache</span>
+                        <span class="skill-tag">Ehcache</span>
                     </div>
                 </div>
 
                 <div class="skill-category">
-                    <h3>인프라 & DevOps</h3>
+                    <h3>☁️ 인프라 & DevOps</h3>
                     <div class="skill-tags">
                         <span class="skill-tag">Kubernetes</span>
                         <span class="skill-tag">AWS (EKS, VPC, S3)</span>
@@ -788,7 +960,7 @@
                 </div>
 
                 <div class="skill-category">
-                    <h3>모니터링</h3>
+                    <h3>📊 모니터링</h3>
                     <div class="skill-tags">
                         <span class="skill-tag">Prometheus</span>
                         <span class="skill-tag">Grafana</span>
@@ -797,7 +969,7 @@
                 </div>
 
                 <div class="skill-category">
-                    <h3>프론트엔드</h3>
+                    <h3>🎨 프론트엔드</h3>
                     <div class="skill-tags">
                         <span class="skill-tag">JavaScript</span>
                         <span class="skill-tag">Thymeleaf</span>
@@ -805,12 +977,14 @@
                 </div>
 
                 <div class="skill-category">
-                    <h3>기타</h3>
+                    <h3>🌏 언어 & 기타</h3>
                     <div class="skill-tags">
+                        <span class="skill-tag">일본어</span>
                         <span class="skill-tag">Microservices</span>
                         <span class="skill-tag">Performance Tuning</span>
                         <span class="skill-tag">시스템 설계</span>
                         <span class="skill-tag">n8n</span>
+                        <span class="skill-tag">바이브 코딩</span>
                     </div>
                 </div>
             </div>
@@ -821,28 +995,43 @@
     <section class="experience" id="experience">
         <div class="container">
             <h2 class="section-title">경력</h2>
-            <p class="section-subtitle">총 8년 7개월의 개발 경험</p>
+            <p class="section-subtitle">총 8년 9개월의 개발 경험</p>
 
             <div class="timeline">
                 <div class="timeline-item">
-                    <div class="date">2021.03 - 현재 (4년 10개월)</div>
+                    <div class="date">2021.03 - 현재 (5년)</div>
                     <h3>티웨이항공</h3>
                     <div class="position">시니어 백엔드 개발자</div>
                     <p>대고객 시스템 운영 및 개발. AWS 클라우드 마이그레이션 주도, CI/CD 파이프라인 구축, 시스템 성능 최적화를 통해 안정적인 서비스 제공</p>
                 </div>
 
                 <div class="timeline-item">
-                    <div class="date">2018.06 - 2020.12 (2년 7개월)</div>
-                    <h3>Smart ing (일본)</h3>
-                    <div class="position">백엔드 개발자</div>
-                    <p>일본 스타트업에서 웹 서비스 개발 경험</p>
+                    <div class="date">2017.04 - 2020.12 (3년 9개월)</div>
+                    <h3>Nurinubi & Smart ing (일본)</h3>
+                    <div class="position">웹 개발자</div>
+                    <p>SI 프로젝트에 참여하여 다양한 클라이언트의 웹 솔루션 개발. 일본 클라이언트와의 협업을 통해 국제 비즈니스 커뮤니케이션 역량 강화</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 교육 섹션 -->
+    <section class="education" id="education">
+        <div class="container">
+            <h2 class="section-title">교육</h2>
+            <p class="section-subtitle">학력 및 전문 교육 과정</p>
+
+            <div class="education-grid">
+                <div class="education-card">
+                    <h3>🎓 부경대학교</h3>
+                    <div class="degree">국어국문학과 (부전공: 정보통신)</div>
+                    <div class="period">2005.03 - 2012.02</div>
                 </div>
 
-                <div class="timeline-item">
-                    <div class="date">2017.04 - 2018.05 (1년 2개월)</div>
-                    <h3>Nurinubi (일본)</h3>
-                    <div class="position">백엔드 개발자</div>
-                    <p>초기 서비스 개발 및 아키텍처 구성</p>
+                <div class="education-card">
+                    <h3>💡 ICT 소프트웨어 전문가 과정</h3>
+                    <div class="degree">JSL 인재개발원 수료</div>
+                    <div class="period">2016.04 - 2016.11</div>
                 </div>
             </div>
         </div>
@@ -858,7 +1047,7 @@
                 <div class="project-card">
                     <div class="project-icon">🏗️</div>
                     <h3>AWS 클라우드 마이그레이션</h3>
-                    <div class="role">프로젝트 서브 리드 (5명)</div>
+                    <div class="role">프로젝트 리드 (20명)</div>
                     <p class="description">온프레미스 환경에서 AWS로 완전 전환. Spring Boot 프레임워크 업그레이드(1.5 → 3.2), Java 버전 업(8 → 17), CI/CD 자동화 구축</p>
                     <div class="project-tech">
                         <span>Java 17</span>
@@ -872,6 +1061,7 @@
                 <div class="project-card">
                     <div class="project-icon">⚡</div>
                     <h3>성능 최적화</h3>
+                    <div class="role">개인 프로젝트</div>
                     <p class="description">응답시간 5초 → 정상화. Redis + Ehcache 하이브리드 캐싱 전략, 메모리 누수 분석 및 최적화, DB 부하 감소</p>
                     <div class="project-tech">
                         <span>Redis</span>
@@ -884,6 +1074,7 @@
                 <div class="project-card">
                     <div class="project-icon">💳</div>
                     <h3>신규 결제 수단 도입</h3>
+                    <div class="role">개인 프로젝트</div>
                     <p class="description">티웨이 상품권 결제 시스템 개발. 쿠프(Coop) API 연동, 복합 결제 로직 구현, 신규 고객 유치</p>
                     <div class="project-tech">
                         <span>Java</span>
@@ -895,7 +1086,7 @@
                 <div class="project-card">
                     <div class="project-icon">🎯</div>
                     <h3>티웨이플러스 포탈</h3>
-                    <div class="role">프로젝트 리드 (3명)</div>
+                    <div class="role">팀 리드 (3명)</div>
                     <p class="description">유상 멤버십 플랫폼 구축. 구독 관리, 환불 시스템, Spring Batch 자동화, 혜택 관리 기능</p>
                     <div class="project-tech">
                         <span>Java</span>
@@ -989,7 +1180,6 @@
                     <a href="mailto:ba2kal@naver.com">📧 이메일</a>
                     <a href="https://saharacat.tistory.com/" target="_blank">📝 기술 블로그</a>
                     <a href="https://meowtivation.saharacat.com/" target="_blank">🎨 개인 프로젝트</a>
-                    <!--<a href="tel:010-6466-8370">☎️ 전화</a>-->
                 </div>
             </div>
 
@@ -1016,12 +1206,12 @@
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
         });
 
-        // 교대 애니메이션
+        // Intersection Observer로 애니메이션
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -100px 0px'
@@ -1031,14 +1221,17 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
                     observer.unobserve(entry.target);
                 }
             });
         }, observerOptions);
 
-        document.querySelectorAll('.skill-category, .timeline-item, .project-card, .problem-item').forEach(el => {
+        // 애니메이션 적용할 요소들
+        document.querySelectorAll('.skill-category, .timeline-item, .project-card, .problem-item, .education-card').forEach(el => {
             el.style.opacity = '0';
-            el.style.animation = 'slideUp 0.6s ease-out forwards';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             observer.observe(el);
         });
     </script>
