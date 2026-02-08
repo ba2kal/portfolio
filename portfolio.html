@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>김동현 | Backend Engineer</title>
+    <title>KIM DONGHYUN | Backend Engineer</title>
     <style>
         * {
             margin: 0;
@@ -661,6 +661,56 @@
         header.scrolled {
             box-shadow: 0 4px 20px rgba(0, 217, 255, 0.1);
         }
+
+        /* ===== 알바트로스 섹션 ===== */
+        .philosophy {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, rgba(26, 31, 58, 0.5) 0%, rgba(10, 14, 39, 0.3) 100%);
+            border-top: 1px solid var(--border);
+        }
+
+        .philosophy-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .philosophy-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .philosophy-text {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .philosophy-text strong {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .philosophy-highlight {
+            background: rgba(0, 217, 255, 0.05);
+            border-left: 4px solid var(--accent);
+            padding: 2rem;
+            border-radius: 0.5rem;
+            margin-top: 2rem;
+            font-style: italic;
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 768px) {
+            .philosophy {
+                padding: 4rem 0;
+            }
+
+            .philosophy-text {
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -668,7 +718,7 @@
     <header>
         <div class="container">
             <nav>
-                <div class="logo">김동현</div>
+                <div class="logo">KIM DONGHYUN</div>
                 <ul class="nav-links">
                     <li><a href="#about">소개</a></li>
                     <li><a href="#skills">기술</a></li>
@@ -685,18 +735,18 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <div class="title">Backend Engineer</div>
+                    <div class="title">Web Developer</div>
                     <h1>김동현</h1>
-                    <p class="subtitle">8년간 대규모 항공사 시스템을 운영해온 시니어 백엔드 개발자입니다. AWS 클라우드 마이그레이션, 성능 최적화, 시스템 아키텍처 설계에 전문성을 갖고 있습니다.</p>
+                    <p class="subtitle">8년간 웹어플리케이션 개발 프로젝트에 참가한 시니어 웹개발자입니다.</p>
                     <div class="hero-cta">
                         <a href="#projects" class="btn btn-primary">프로젝트 보기</a>
                         <a href="#contact" class="btn btn-secondary">연락하기</a>
                     </div>
                 </div>
-                <div class="hero-visual">
+                <!--<div class="hero-visual">
                     <div class="avatar-glow"></div>
                     <div class="avatar">김동현</div>
-                </div>
+                </div>-->
             </div>
         </div>
     </section>
@@ -760,6 +810,7 @@
                         <span class="skill-tag">Microservices</span>
                         <span class="skill-tag">Performance Tuning</span>
                         <span class="skill-tag">시스템 설계</span>
+                        <span class="skill-tag">n8n</span>
                     </div>
                 </div>
             </div>
@@ -807,7 +858,7 @@
                 <div class="project-card">
                     <div class="project-icon">🏗️</div>
                     <h3>AWS 클라우드 마이그레이션</h3>
-                    <div class="role">프로젝트 리드 (20명)</div>
+                    <div class="role">프로젝트 서브 리드 (5명)</div>
                     <p class="description">온프레미스 환경에서 AWS로 완전 전환. Spring Boot 프레임워크 업그레이드(1.5 → 3.2), Java 버전 업(8 → 17), CI/CD 자동화 구축</p>
                     <div class="project-tech">
                         <span>Java 17</span>
@@ -821,7 +872,6 @@
                 <div class="project-card">
                     <div class="project-icon">⚡</div>
                     <h3>성능 최적화</h3>
-                    <div class="role">개인 프로젝트</div>
                     <p class="description">응답시간 5초 → 정상화. Redis + Ehcache 하이브리드 캐싱 전략, 메모리 누수 분석 및 최적화, DB 부하 감소</p>
                     <div class="project-tech">
                         <span>Redis</span>
@@ -834,7 +884,6 @@
                 <div class="project-card">
                     <div class="project-icon">💳</div>
                     <h3>신규 결제 수단 도입</h3>
-                    <div class="role">개인 프로젝트</div>
                     <p class="description">티웨이 상품권 결제 시스템 개발. 쿠프(Coop) API 연동, 복합 결제 로직 구현, 신규 고객 유치</p>
                     <div class="project-tech">
                         <span>Java</span>
@@ -846,7 +895,7 @@
                 <div class="project-card">
                     <div class="project-icon">🎯</div>
                     <h3>티웨이플러스 포탈</h3>
-                    <div class="role">팀 리드 (3명)</div>
+                    <div class="role">프로젝트 리드 (3명)</div>
                     <p class="description">유상 멤버십 플랫폼 구축. 구독 관리, 환불 시스템, Spring Batch 자동화, 혜택 관리 기능</p>
                     <div class="project-tech">
                         <span>Java</span>
@@ -907,6 +956,28 @@
         </div>
     </section>
 
+    <!-- 철학 & 비전 섹션 -->
+    <section class="philosophy" id="philosophy">
+        <div class="container">
+            <div class="philosophy-content">
+                <span class="philosophy-icon">🦅</span>
+                <h2 class="section-title" style="margin-bottom: 2rem;">개발자의 철학</h2>
+
+                <p class="philosophy-text">
+                    <strong>알바트로스</strong>는 거대한 날개로 땅에서는 느리지만, 일단 비행하면 가장 오래 하늘을 날 수 있는 새입니다.
+                </p>
+
+                <p class="philosophy-text">
+                    8년간의 개발 여정도 마찬가지였습니다. 때로는 무거운 과제들로 느리게 걸어갔지만, <strong>중요한 순간마다 날개를 펼쳐 높이 날아올랐습니다</strong>. 티웨이항공에서 수만 명의 사용자가 의존하는 시스템을 안정적으로 운영하며, 제 진정한 역량을 발견했습니다.
+                </p>
+
+                <div class="philosophy-highlight">
+                    함께 일하게 된다면, 이 경험과 잠재력을 펼쳐 <strong>함께 성장해나가고 싶습니다</strong>.
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- 푸터 -->
     <footer id="contact">
         <div class="container">
@@ -917,8 +988,8 @@
                 <div class="social-links">
                     <a href="mailto:ba2kal@naver.com">📧 이메일</a>
                     <a href="https://saharacat.tistory.com/" target="_blank">📝 기술 블로그</a>
-                    <a href="https://meowtivation.saharacat.com/" target="_blank">🎨 포트폴리오 프로젝트</a>
-                    <a href="tel:010-6466-8370">☎️ 전화</a>
+                    <a href="https://meowtivation.saharacat.com/" target="_blank">🎨 개인 프로젝트</a>
+                    <!--<a href="tel:010-6466-8370">☎️ 전화</a>-->
                 </div>
             </div>
 
