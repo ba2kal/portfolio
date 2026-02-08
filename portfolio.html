@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>김동현 | Backend Engineer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0a0e27;
+            --secondary: #1a1f3a;
+            --accent: #00d9ff;
+            --accent-warm: #ff6b6b;
+            --text-primary: #f5f5f5;
+            --text-secondary: #a0a0a0;
+            --border: #2a3f5f;
+            --success: #4ade80;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1729 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 배경 애니메이션 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 107, 107, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* 유틸리티 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* ===== 헤더 ===== */
+        header {
+            position: sticky;
+            top: 0;
+            background: rgba(10, 14, 39, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(90deg, var(--accent) 0%, #00a8cc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding-bottom: 0.25rem;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+        }
+
+        /* ===== 히어로 섹션 ===== */
+        .hero {
+            padding: 6rem 0 4rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            animation: fadeIn 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            letter-spacing: -1px;
+            animation: slideUp 0.7s ease-out 0.3s both;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-text .title {
+            color: var(--accent);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            animation: slideUp 0.7s ease-out 0.4s both;
+        }
+
+        .hero-text .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            animation: slideUp 0.7s ease-out 0.5s both;
+            max-width: 500px;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            animation: slideUp 0.7s ease-out 0.6s both;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--accent) 0%, #00a8cc 100%);
+            color: var(--primary);
+            border: 2px solid var(--accent);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 217, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: slideUp 0.7s ease-out 0.4s both;
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-warm) 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            font-weight: 700;
+            color: var(--primary);
+            box-shadow: 0 20px 60px rgba(0, 217, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .avatar::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .avatar-glow {
+            position: absolute;
+            inset: -5px;
+            border-radius: 20px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-warm), var(--accent));
+            opacity: 0.3;
+            filter: blur(15px);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+            }
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* ===== 스킬 섹션 ===== */
+        .skills {
+            padding: 6rem 0;
+            background: linear-gradient(180deg, rgba(26, 31, 58, 0.5) 0%, rgba(10, 14, 39, 0.3) 100%);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: rgba(26, 31, 58, 0.6);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .skill-category:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            background: rgba(26, 31, 58, 0.9);
+        }
+
+        .skill-category:hover::before {
+            left: 100%;
+        }
+
+        .skill-category h3 {
+            color: var(--accent);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+        }
+
+        .skill-tag {
+            background: rgba(0, 217, 255, 0.1);
+            color: var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .skill-tag:hover {
+            background: rgba(0, 217, 255, 0.2);
+            border-color: var(--accent);
+        }
+
+        /* ===== 경력 섹션 ===== */
+        .experience {
+            padding: 6rem 0;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--accent) 0%, transparent 100%);
+        }
+
+        .timeline-item {
+            margin-bottom: 3rem;
+            padding-left: 3rem;
+            position: relative;
+            animation: slideUp 0.6s ease-out backwards;
+        }
+
+        .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.3s; }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 0;
+            width: 15px;
+            height: 15px;
+            background: var(--accent);
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+        }
+
+        .timeline-item .date {
+            color: var(--accent);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .timeline-item .position {
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+        }
+
+        .timeline-item p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* ===== 프로젝트 섹션 ===== */
+        .projects {
+            padding: 6rem 0;
+            background: linear-gradient(180deg, rgba(26, 31, 58, 0.3) 0%, rgba(10, 14, 39, 0.5) 100%);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .project-card {
+            background: rgba(26, 31, 58, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-8px);
+            background: rgba(26, 31, 58, 0.95);
+            box-shadow: 0 15px 40px rgba(0, 217, 255, 0.15);
+        }
+
+        .project-card:hover::after {
+            opacity: 1;
+        }
+
+        .project-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .project-card .role {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .project-card .description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .project-tech span {
+            background: rgba(0, 217, 255, 0.1);
+            color: var(--accent);
+            padding: 0.3rem 0.7rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(0, 217, 255, 0.2);
+        }
+
+        /* ===== 문제해결 섹션 ===== */
+        .problem-solving {
+            padding: 6rem 0;
+        }
+
+        .problem-item {
+            background: rgba(26, 31, 58, 0.4);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .problem-item:hover {
+            border-color: var(--accent);
+            background: rgba(26, 31, 58, 0.6);
+        }
+
+        .problem-title {
+            color: var(--accent);
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .problem-item p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .problem-item p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ===== 푸터 ===== */
+        footer {
+            background: rgba(10, 14, 39, 0.8);
+            border-top: 1px solid var(--border);
+            padding: 3rem 0 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            margin-bottom: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .social-links a:hover {
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* ===== 반응형 ===== */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 4rem 0 2rem;
+                min-height: auto;
+            }
+
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .skills-grid,
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: -8px;
+            }
+
+            .timeline-item {
+                padding-left: 2rem;
+            }
+
+            .timeline-item::before {
+                left: -14px;
+            }
+        }
+
+        /* 스크롤 여부에 따른 헤더 */
+        header.scrolled {
+            box-shadow: 0 4px 20px rgba(0, 217, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- 헤더 -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">김동현</div>
+                <ul class="nav-links">
+                    <li><a href="#about">소개</a></li>
+                    <li><a href="#skills">기술</a></li>
+                    <li><a href="#experience">경력</a></li>
+                    <li><a href="#projects">프로젝트</a></li>
+                    <li><a href="#contact">연락</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 히어로 섹션 -->
+    <section class="hero" id="about">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="title">Backend Engineer</div>
+                    <h1>김동현</h1>
+                    <p class="subtitle">8년간 대규모 항공사 시스템을 운영해온 시니어 백엔드 개발자입니다. AWS 클라우드 마이그레이션, 성능 최적화, 시스템 아키텍처 설계에 전문성을 갖고 있습니다.</p>
+                    <div class="hero-cta">
+                        <a href="#projects" class="btn btn-primary">프로젝트 보기</a>
+                        <a href="#contact" class="btn btn-secondary">연락하기</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="avatar-glow"></div>
+                    <div class="avatar">김동현</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 스킬 섹션 -->
+    <section class="skills" id="skills">
+        <div class="container">
+            <h2 class="section-title">기술 스택</h2>
+            <p class="section-subtitle">대규모 시스템 개발 및 운영에 필요한 핵심 기술들</p>
+
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>백엔드</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Java 17</span>
+                        <span class="skill-tag">Spring Boot 3.x</span>
+                        <span class="skill-tag">JPA</span>
+                        <span class="skill-tag">Spring Batch</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>데이터베이스</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">MySQL</span>
+                        <span class="skill-tag">Redis</span>
+                        <span class="skill-tag">AWS ElastiCache</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>인프라 & DevOps</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Kubernetes</span>
+                        <span class="skill-tag">AWS (EKS, VPC, S3)</span>
+                        <span class="skill-tag">Jenkins</span>
+                        <span class="skill-tag">ArgoCD</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>모니터링</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Prometheus</span>
+                        <span class="skill-tag">Grafana</span>
+                        <span class="skill-tag">Loki</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>프론트엔드</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">Thymeleaf</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>기타</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Microservices</span>
+                        <span class="skill-tag">Performance Tuning</span>
+                        <span class="skill-tag">시스템 설계</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 경력 섹션 -->
+    <section class="experience" id="experience">
+        <div class="container">
+            <h2 class="section-title">경력</h2>
+            <p class="section-subtitle">총 8년 7개월의 개발 경험</p>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="date">2021.03 - 현재 (4년 10개월)</div>
+                    <h3>티웨이항공</h3>
+                    <div class="position">시니어 백엔드 개발자</div>
+                    <p>대고객 시스템 운영 및 개발. AWS 클라우드 마이그레이션 주도, CI/CD 파이프라인 구축, 시스템 성능 최적화를 통해 안정적인 서비스 제공</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="date">2018.06 - 2020.12 (2년 7개월)</div>
+                    <h3>Smart ing (일본)</h3>
+                    <div class="position">백엔드 개발자</div>
+                    <p>일본 스타트업에서 웹 서비스 개발 경험</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="date">2017.04 - 2018.05 (1년 2개월)</div>
+                    <h3>Nurinubi (일본)</h3>
+                    <div class="position">백엔드 개발자</div>
+                    <p>초기 서비스 개발 및 아키텍처 구성</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 프로젝트 섹션 -->
+    <section class="projects" id="projects">
+        <div class="container">
+            <h2 class="section-title">주요 프로젝트</h2>
+            <p class="section-subtitle">시니어 엔지니어로서 주도한 핵심 프로젝트들</p>
+
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-icon">🏗️</div>
+                    <h3>AWS 클라우드 마이그레이션</h3>
+                    <div class="role">프로젝트 리드 (20명)</div>
+                    <p class="description">온프레미스 환경에서 AWS로 완전 전환. Spring Boot 프레임워크 업그레이드(1.5 → 3.2), Java 버전 업(8 → 17), CI/CD 자동화 구축</p>
+                    <div class="project-tech">
+                        <span>Java 17</span>
+                        <span>Spring Boot 3.x</span>
+                        <span>Kubernetes</span>
+                        <span>Jenkins</span>
+                        <span>ArgoCD</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon">⚡</div>
+                    <h3>성능 최적화</h3>
+                    <div class="role">개인 프로젝트</div>
+                    <p class="description">응답시간 5초 → 정상화. Redis + Ehcache 하이브리드 캐싱 전략, 메모리 누수 분석 및 최적화, DB 부하 감소</p>
+                    <div class="project-tech">
+                        <span>Redis</span>
+                        <span>Ehcache</span>
+                        <span>Cache Strategy</span>
+                        <span>JVM Tuning</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon">💳</div>
+                    <h3>신규 결제 수단 도입</h3>
+                    <div class="role">개인 프로젝트</div>
+                    <p class="description">티웨이 상품권 결제 시스템 개발. 쿠프(Coop) API 연동, 복합 결제 로직 구현, 신규 고객 유치</p>
+                    <div class="project-tech">
+                        <span>Java</span>
+                        <span>Spring Boot</span>
+                        <span>API Integration</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon">🎯</div>
+                    <h3>티웨이플러스 포탈</h3>
+                    <div class="role">팀 리드 (3명)</div>
+                    <p class="description">유상 멤버십 플랫폼 구축. 구독 관리, 환불 시스템, Spring Batch 자동화, 혜택 관리 기능</p>
+                    <div class="project-tech">
+                        <span>Java</span>
+                        <span>Spring Batch</span>
+                        <span>MySQL</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon">🌏</div>
+                    <h3>국제 결제 및 규정 대응</h3>
+                    <div class="role">개인 프로젝트</div>
+                    <p class="description">WorldPay 인도네시아 루피아 결제 시스템, 캐나다 소아 좌석 규정 적용, 국제 운항 확대 기반 구축</p>
+                    <div class="project-tech">
+                        <span>WorldPay</span>
+                        <span>Payment Gateway</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon">🔍</div>
+                    <h3>고객편의성 개선</h3>
+                    <div class="role">개인 프로젝트</div>
+                    <p class="description">통합 검색 정확도 향상, 카카오톡 간편 로그인, 프로모션 자동 적용, 운항 정보 조회 개선</p>
+                    <div class="project-tech">
+                        <span>JavaScript</span>
+                        <span>Thymeleaf</span>
+                        <span>UX Optimization</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 문제해결 섹션 -->
+    <section class="problem-solving" id="challenges">
+        <div class="container">
+            <h2 class="section-title">핵심 성과</h2>
+            <p class="section-subtitle">대규모 시스템 운영에서 직면한 도전과 해결 과정</p>
+
+            <div class="problem-item">
+                <div class="problem-title">💾 메모리 누수 분석 및 최적화</div>
+                <p>AWS 마이그레이션 후 주 1회 90% 메모리 점유로 POD 재시작 문제 발생. 3개월간 JVM 메모리 덤프 분석을 통해 15가지 메모리 누수 패턴 식별 및 체크리스트 수립. 팀 전체에 공유하여 향후 동일 이슈 방지</p>
+                <p><strong>결과:</strong> 메모리 안정성 확보, 개발팀의 코드 품질 향상</p>
+            </div>
+
+            <div class="problem-item">
+                <div class="problem-title">⚙️ 캐싱 아키텍처 설계</div>
+                <p>피크타임 응답시간 5초 이상 지연 문제를 캐싱 전략으로 해결. Look-Aside + Write-Through 전략 적용, Application → EhCache(L1) → Redis(L2) → Database(L3) 계층화 구조 설계</p>
+                <p><strong>결과:</strong> 응답시간 정상화, SQL 호출 감소로 DB 부하 경감, 시스템 안정성 향상</p>
+            </div>
+
+            <div class="problem-item">
+                <div class="problem-title">🚀 프레임워크 현대화</div>
+                <p>Spring Boot 1.5.19 → 3.2.1, Java 8 → 17로 업그레이드. 기술적 요소 분석, 가이드 문서 작성, 팀 교육을 통해 성공적으로 마이그레이션</p>
+                <p><strong>결과:</strong> 보안성 및 성능 개선, GC 효율성 향상, 최신 기술 스택 구축</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 푸터 -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <h3 style="margin-bottom: 1rem; font-size: 1.5rem;">함께 일하고 싶으신가요?</h3>
+                <p class="footer-text" style="margin-bottom: 2rem;">대규모 시스템 개발과 안정적인 운영에 대한 경험을 공유할 준비가 되어있습니다.</p>
+
+                <div class="social-links">
+                    <a href="mailto:ba2kal@naver.com">📧 이메일</a>
+                    <a href="https://saharacat.tistory.com/" target="_blank">📝 기술 블로그</a>
+                    <a href="https://meowtivation.saharacat.com/" target="_blank">🎨 포트폴리오 프로젝트</a>
+                    <a href="tel:010-6466-8370">☎️ 전화</a>
+                </div>
+            </div>
+
+            <p class="footer-text" style="border-top: 1px solid var(--border); padding-top: 2rem; margin-top: 2rem;">
+                © 2025 Donghyun Kim. All rights reserved. | Incheon, South Korea
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // 헤더 스크롤 효과
+        const header = document.querySelector('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // 부드러운 스크롤
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // 교대 애니메이션
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.skill-category, .timeline-item, .project-card, .problem-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.animation = 'slideUp 0.6s ease-out forwards';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
